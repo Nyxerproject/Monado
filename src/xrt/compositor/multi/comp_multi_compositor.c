@@ -922,11 +922,6 @@ multi_compositor_deliver_any_frames(struct multi_compositor *mc, uint64_t displa
 
 	if (time_is_greater_then_or_within_half_ms(display_time_ns, mc->scheduled.data.display_time_ns)) {
 		slot_move_and_clear_locked(mc, &mc->delivered, &mc->scheduled);
-
-		uint64_t frame_time_ns = mc->delivered.data.display_time_ns;
-		if (!time_is_within_half_ms(frame_time_ns, display_time_ns)) {
-			log_frame_time_diff(frame_time_ns, display_time_ns);
-		}
 	}
 
 	os_mutex_unlock(&mc->slot_lock);
